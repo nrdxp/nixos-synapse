@@ -46,35 +46,14 @@
                 "/var/lib/acme/matrix.nrdxp.dev/fullchain.pem";
               tls_private_key_path = "/var/lib/acme/matrix.nrdxp.dev/key.pem";
               listeners = [
-                {
-                  # federation
-                  bind_address = "";
-                  port = 8448;
-                  resources = [
-                    {
-                      compress = true;
-                      names = [ "client" "webclient" ];
-                    }
-                    {
-                      compress = false;
-                      names = [ "federation" ];
-                    }
-                  ];
-                  tls = true;
-                  type = "http";
-                  x_forwarded = false;
-                }
                 # client
                 {
-                  bind_address = "127.0.0.1";
                   port = 8008;
                   resources = [{
                     compress = true;
-                    names = [ "client" "webclient" ];
+                    names = [ "client" "federation" ];
                   }];
                   tls = false;
-                  type = "http";
-                  x_forwarded = true;
                 }
               ];
               extraConfig = ''
