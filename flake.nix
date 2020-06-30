@@ -57,7 +57,7 @@
                 }
               ];
               extraConfig = ''
-                max_upload_size: "100M"
+                max_upload_size: "10M"
               '';
             };
 
