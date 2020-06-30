@@ -64,6 +64,11 @@
             # web client proxy and setup certs
             services.nginx = {
               enable = true;
+
+              recommendedGzipSettings = true;
+              recommendedOptimisation = true;
+              recommendedTlsSettings = true;
+
               virtualHosts = {
                 "matrix.nrdxp.dev" = {
                   forceSSL = true;
