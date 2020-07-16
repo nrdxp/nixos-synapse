@@ -2,8 +2,9 @@
   description = "Deploy Synapse Server to EC2";
 
   inputs.nixpkgs.url = "nixpkgs/release-20.03";
+  inputs.nixflk.url = "github:nrdxp/nixflk";
 
-  outputs = { self, nixpkgs, nixops }:
+  outputs = { self, nixpkgs, nixops, nixflk }:
     with nixpkgs.lib;
     let
       system = "x86_64-linux";
@@ -24,7 +25,15 @@
           network.description = "Synapse Server";
 
           synapse-server = { resources, pkgs, config, ... }: {
-            imports = [ ./modules/jitsi-meet.nix ];
+            imports = with nixflk.nixosModules.profiles; [
+              ./modules/jitsi-meet.nix
+              core
+              develop
+            ];
+
+            nixpkgs.config.allowUnfree = true;
+
+            users.users.root.hashedPassword = fileContents ./secrets/root;
 
             deployment = {
               targetEnv = "ec2";
@@ -38,7 +47,7 @@
             };
 
             environment.systemPackages = with pkgs; [ riot-web ];
-            nixpkgs.overlays = [
+            nixpkgs.overlays = builtins.attrValues nixflk.overlays ++ [
               (self: super: {
                 riot-web = super.riot-web.override {
                   conf = {
