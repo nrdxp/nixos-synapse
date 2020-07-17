@@ -26,11 +26,11 @@
         "unstable": "unstable"
       },
       "locked": {
-        "lastModified": 1594934859,
-        "narHash": "sha256-oSc6SnrWImgY/nCIerKcth1AXbGk0nIZq+lOQnbqc+k=",
+        "lastModified": 1594946608,
+        "narHash": "sha256-nvuRIkh4/ok0GA304KryQSJe1KPc15TpbOYjmMQfqVI=",
         "owner": "nrdxp",
         "repo": "nixflk",
-        "rev": "42ed7910b1d5da6de0f1af2ddab738814ce0cadc",
+        "rev": "34f27bd3f3f6e2cd3dd6bce6f9a098c90c2a3da5",
         "type": "github"
       },
       "original": {
