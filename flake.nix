@@ -2,13 +2,15 @@
   description = "Deploy Synapse Server to EC2";
 
   inputs.nixpkgs.url = "nixpkgs/release-20.03";
+  inputs.unstable.url = "nixpkgs/master";
   inputs.nixflk.url = "github:nrdxp/nixflk";
 
-  outputs = { self, nixpkgs, nixops, nixflk }:
+  outputs = { self, nixpkgs, unstable, nixops, nixflk }:
     with nixpkgs.lib;
     let
       system = "x86_64-linux";
       pkgs_ = import nixpkgs { inherit system; };
+      unstablePkgs = import unstable { inherit system; };
 
       region = "us-west-1";
       accessKeyId = fileContents ./secrets/keyid;
@@ -47,9 +49,11 @@
             };
 
             environment.systemPackages = with pkgs; [ riot-web ];
-            nixpkgs.overlays = builtins.attrValues nixflk.overlays ++ [
+            nixpkgs.overlays = [
+              nixflk.overlays.kakoune
+              nixflk.overlays.pkgs
               (self: super: {
-                riot-web = super.riot-web.override {
+                riot-web = unstablePkgs.riot-web.override {
                   conf = {
                     default_server_config = {
                       "m.homeserver" = {
@@ -66,6 +70,7 @@
                     jitsi.preferredDomain = "jitsi.nrdxp.dev";
                   };
                 };
+                matrix-synapse = unstablePkgs.matrix-synapse;
               })
             ];
 

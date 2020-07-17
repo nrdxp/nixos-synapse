@@ -155,7 +155,8 @@
       "inputs": {
         "nixflk": "nixflk",
         "nixops": "nixops",
-        "nixpkgs": "nixpkgs_4"
+        "nixpkgs": "nixpkgs_4",
+        "unstable": "unstable_2"
       }
     },
     "unstable": {
@@ -165,6 +166,21 @@
         "owner": "NixOS",
         "repo": "nixpkgs",
         "rev": "6faba433b2a3cbaafcbce360a3f2db65c88a1ac7",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "master",
+        "type": "indirect"
+      }
+    },
+    "unstable_2": {
+      "locked": {
+        "lastModified": 1595022235,
+        "narHash": "sha256-JIQEIWY+eonW5OJcLi6ByFVv2dCCQsgX33SwTwVQzX8=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "36adeebde6cc1035f2f3a58a131376b2294f2f12",
         "type": "github"
       },
       "original": {
