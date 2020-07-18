@@ -122,34 +122,14 @@
               tls_certificate_path =
                 "/var/lib/acme/matrix.nrdxp.dev/fullchain.pem";
               tls_private_key_path = "/var/lib/acme/matrix.nrdxp.dev/key.pem";
-              listeners = [
-                { # federation
-                  bind_address = "";
-                  port = 8448;
-                  resources = [
-                    {
-                      compress = false;
-                      names = [ "federation" ];
-                    }
-                    {
-                      compress = true;
-                      names = [ "client" "webclient" ];
-                    }
-                  ];
-                  type = "http";
-
-                  tls = true;
-                  x_forwarded = false;
-                }
-                { # client
-                  port = 8008;
-                  resources = [{
-                    compress = true;
-                    names = [ "client" "webclient" ];
-                  }];
-                  tls = false;
-                }
-              ];
+              listeners = [{
+                port = 8008;
+                resources = [{
+                  compress = true;
+                  names = [ "client" "webclient" "federation" ];
+                }];
+                tls = false;
+              }];
 
               turn_uris = [
                 "turn:turn.dangerousdemos.net:3478?transport=udp"
@@ -236,7 +216,7 @@
               allowedUDPPortRanges = [ range ];
               allowedTCPPortRanges = [ range ];
 
-              allowedTCPPorts = [ 22 80 443 3478 3479 8448 ];
+              allowedTCPPorts = [ 22 80 443 3478 3479 ];
             };
           };
 
