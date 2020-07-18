@@ -109,6 +109,9 @@
               max-port = 49999;
             };
 
+            systemd.services.matrix-synapse.serviceConfig.Restart =
+              mkForce "always";
+
             services.matrix-synapse = {
               enable = true;
               server_name = "nrdxp.dev";
