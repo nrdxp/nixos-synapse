@@ -48,11 +48,16 @@
               };
             };
 
-            environment.systemPackages = with pkgs; [ riot-web ];
+            environment.systemPackages = with pkgs; [
+              riot-web
+              synapse-compress-state
+            ];
             nixpkgs.overlays = [
               nixflk.overlays.kakoune
               nixflk.overlays.pkgs
               (self: super: {
+                synapse-compress-state =
+                  self.callPackage ./pkgs/synapse-compress-state { };
                 riot-web = unstablePkgs.riot-web.override {
                   conf = {
                     default_server_config = {
