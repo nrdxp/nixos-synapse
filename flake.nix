@@ -18,19 +18,23 @@
 
       database_pass = fileContents ./secrets/database;
     in {
-      devShell."${system}" =
-        pkgs_.mkShell { buildInputs = [ nixops.defaultPackage."${system}" ]; };
+      devShell."${system}" = pkgs_.mkShell {
+        name = "nixos-synapse";
+        buildInputs = [ nixops.defaultPackage."${system}" ];
+      };
 
       nixopsConfigurations = {
         default = {
           inherit nixpkgs;
+
           network.description = "Synapse Server";
 
           synapse-server = { resources, pkgs, config, ... }: {
-            imports = with nixflk.nixosModules.profiles; [
+            imports = with nixflk.nixosModules; [
               ./modules/jitsi-meet.nix
-              core
-              develop
+              profiles.core
+              profiles.develop
+              cachix
             ];
 
             nixpkgs.config.allowUnfree = true;
